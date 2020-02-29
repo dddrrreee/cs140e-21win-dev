@@ -11,6 +11,25 @@
 
 You likely have a short somewhere and in the worst-case can fry your laptop.
 
+#### Setup your  CS140E_2021_PATH variable.
+
+Similar to how you added your local `~/bin` directory to your
+shell's path on the first lab, today you're going to edit your
+shell configuration file (e.g., `.tcshrc`, `.bash_profile`, etc)
+to set set an environment variable `CS140E_PATH` to contain where
+you have your repository.
+
+E.g., for me, since I'm running `tcsh` I edit my `.tcshrc` file and
+add:
+
+    setenv CS140E_2021_PATH /home/engler/class/cs140e-21win-dev/
+
+To the end of it.  If you use `bash` you'll do an:
+
+    export CS140E_2021_PATH=<path to your repo>
+
+And, as before, don't forget to source your configuration file.
+
 ### Reading before lab:
 
   1. Read throuh `Part 0` of the lab (in the README.md)
