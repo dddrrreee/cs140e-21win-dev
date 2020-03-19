@@ -9,7 +9,7 @@
 int open_tty(const char *device) {
     int fd;
 
-    const unsigned maxattempts = 5;
+    const unsigned maxattempts = 8;
     for(int i = 0; i < maxattempts; i++) {
         if((fd = open(device, O_RDWR | O_NOCTTY | O_SYNC)) >= 0) {
             output("opened tty port <%s>.\n", device);

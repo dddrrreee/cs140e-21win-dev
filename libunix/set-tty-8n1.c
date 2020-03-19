@@ -1,5 +1,4 @@
-// engler, cs140e.
-// set a tty to 8n1 at <speed> baudrate.
+// engler, cs140e: set a tty to 8n1 at <speed> baudrate.
 //
 #include <assert.h>
 #include <string.h>

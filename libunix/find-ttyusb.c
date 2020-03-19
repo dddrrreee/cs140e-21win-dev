@@ -1,4 +1,4 @@
-// engler, cs140e.
+// engler, cs140e: your code to find the tty-usb device on your laptop.
 #include <assert.h>
 #include <fcntl.h>
 #include <string.h>
@@ -23,8 +23,7 @@ static int filter(const struct dirent *d) {
 // a device with a prefix given by <ttyusb_prefixes> in /dev
 // returns:
 //  - device name.
-// panic's if 0 or more than 1.
-//
+// error: panic's if 0 or more than 1 devices.
 char *find_ttyusb(void) {
     char *p;
 
