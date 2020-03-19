@@ -1,9 +1,9 @@
 ### Bootloader prelab
 
-Since this lab is going out so late, there is no official thing you
-need to hand in.  HOWEVER, you are strongly encouraged to do all
-the prelab work, otherwise it's going to be a long lab --- in particular,
-implement the two routines described in Part 3 (below).
+For this lab, there is no official thing you need to hand in.  HOWEVER,
+you are strongly encouraged to do all the prelab work, otherwise it's
+going to be a long lab --- in particular, implement the two routines
+described in Part 3 (below).
 
 ### 1. Read through the lab
 
@@ -13,8 +13,7 @@ interesting to the extent it enables you to build the protocol.
 
 ### 2. Look around the code.
 
-To save time in lab (yeah, I know, I didn't give you much time to
-save time) it's good to get sort-of familiar with the starter code and
+To save time in lab it's good to get sort-of familiar with the starter code and
 project code structure.  Since we are writing code to run on both UNIX
 (`unix-side`) and on the r/pi (`pi-side`) we have more directories than
 usual for today:
@@ -46,8 +45,10 @@ here to the `start.s` in your `1-gpio` lab:
 
 ##### `unix-side` directory
 
-The `unix-side` directory holds all the UNIX side code.  In it, the 
-   - `unix-side/libunix` directory holds useful helper routines that
+The unix side code is split into two directories:
+   1. The `2-bootloader/unix-side` directory holds the UNIX side code 
+      bootloader code.  
+   2. `cs140e-21win-dev/libunix` directory holds useful helper routines that
       your UNIX bootloader code will use (as well as subsequent labs).
       These routines are all described in `libunix/libunix.h`.
 
@@ -62,9 +63,9 @@ Make sure you look through:
      the `libunix` directory.
 
 And, look but DO NOT MODIFY:
-  1. `send-recv.[ch]`: this holds helper routines to send/receive data
+  1. `libunix/put-get.c`: this holds helper routines to send/receive data
      to/from the pi.   Use these directly!
-  2. `my-install.c`: this is our starter code for setting everything up.
+  2. `unix-side/my-install.c`: this is our starter code for setting everything up.
 
 ### 3. Implement two Unix support routines.
 
