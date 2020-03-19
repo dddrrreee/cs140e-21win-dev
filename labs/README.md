@@ -17,7 +17,6 @@ on both the pi and unix side will be written by you:
      pins using the Broadcom document GPIO description.  You will use
      this to implement your own blink and touch sensor.
 
-***[HAVE NOT UPDATED THE LABS BELOW]***
 
   - [2-bootloader](2-bootloader/): you will implement your own
      bootloader to transfer the code from your laptop to the pi.  The
@@ -25,6 +24,8 @@ on both the pi and unix side will be written by you:
      This approach is overly complicated.  You will do a much simpler,
      more likely to be correct protocol.  It has the advantage that it
      will later make it easier to do a network boot.
+
+***[HAVE NOT UPDATED THE LABS BELOW]***
 
   - [3-cross-check](3-cross-check/): you will use read-write logging
      to verify that your GPIO code is equivalent to everyone else's.   If one
