@@ -1,7 +1,7 @@
-/* engler, cs140e.
+/* engler, cs140e: very simple "network" bootloader.  
  *
- * very simple bootloader.  more robust than xmodem, which seems to 
- * have bugs in terms of recovery with inopportune timeouts.
+ * much more robust than xmodem, which seems to have bugs in terms of 
+ * recovery with inopportune timeouts.
  */
 
 /**********************************************************************
@@ -54,12 +54,12 @@ static void die(int code) {
 // DANGER DANGER DANGER!!!  Be careful WHEN you call this!
 // DANGER DANGER DANGER!!!  Be careful WHEN you call this!
 // DANGER DANGER DANGER!!!  Be careful WHEN you call this!
-//
-// We do not have interrupts and the UART can only hold 
-// 8 bytes before it starts dropping them.   so if you print at the
-// same time the UNIX end can send you data, you will likely
-// lose some, leading to weird bugs.  If you print, safest is 
-// to do right after you have completely received a message.
+// Why:
+//      We do not have interrupts and the UART can only hold 8 bytes
+//      before it starts dropping them.   so if you print at the same
+//      time the UNIX end can send you data, you will likely lose some,
+//      leading to weird bugs.  If you print, safest is to do right
+//      after you have completely received a message.
 void my_putk(const char *msg) {
     put_uint32(PRINT_STRING);
     // lame strlen.
@@ -71,10 +71,14 @@ void my_putk(const char *msg) {
         put_uint8(msg[n]);
 }
 
-// send a <GET_PROG_INFO> message every 300ms.
+// send a <GET_PROG_INFO> message every 300ms, waiting for some 
+// kind of response from the unix side.
 // 
 // NOTE: look at the idiom for comparing the current usec count to 
 // when we started.  
+//
+// probably should have you write this, but the english to describe
+// it is way longer than the code, so...
 void wait_for_data(void) {
     while(1) {
         put_uint32(GET_PROG_INFO);
@@ -104,23 +108,21 @@ void notmain(void) {
     /****************************************************************
      * Add your code below: 2,3,4,5,6
      */
-
+    uint32_t addr = ARMBASE;  // initially check that we sent this.
 
     // 2. expect: [PUT_PROG_INFO, addr, nbytes, cksum] 
     //    we echo cksum back in step 4 to help debugging.
 
 
     // 3. If the binary will collide with us, abort. 
-    //    you can assume that code must be below where the booloader code
+    //    You can assume that code must be below where the booloader code
     //    gap starts.
 
 
     // 4. send [GET_CODE, cksum] back.
 
-
     // 5. expect: [PUT_CODE, <code>]
-    //  read each sent byte and write it starting at 
-    //  ARMBASE using PUT8
+    //  read each sent byte and write it starting at <ARMBASE> using <PUT8>
 
     // 6. verify the cksum of the copied code.
 
@@ -141,7 +143,7 @@ void notmain(void) {
     delay_ms(500);
 
     // run what we got.
-    BRANCHTO(ARMBASE);
+    BRANCHTO(addr);
 
     // should not get back here, but just in case.
     rpi_reboot();
