@@ -1,6 +1,6 @@
 SUBDIRS=  0-blink 1-gpio 2-bootloader
 
-.PHONY: all check clean
+.PHONY: all check clean 
 all check clean: $(SUBDIRS)
 
 all: TARGET=all
