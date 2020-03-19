@@ -71,34 +71,24 @@ void my_putk(const char *msg) {
         put_uint8(msg[n]);
 }
 
-// send a <GET_PROG_INFO> message every 300ms, waiting for some 
-// kind of response from the unix side.
-// 
-// NOTE: look at the idiom for comparing the current usec count to 
-// when we started.  
-//
-// probably should have you write this, but the english to describe
-// it is way longer than the code, so...
-void wait_for_data(void) {
-    while(1) {
-        put_uint32(GET_PROG_INFO);
-
-        unsigned s = timer_get_usec();
-        // the funny subtraction is to handle if (when) the micro-second
-        // counter wraps around.
-        while((timer_get_usec() - s) < 300*1000) {
-            // the UART says there is data: start eating it!
-            if(uart_has_data())
-                return;
-        }
-    }
-}
-
 /*****************************************************************
  * All the code you write goes below.
  */
 
-// Simple bootloader: put all of your code here: implement steps 2,3,4,5,6
+
+// keep sending a <GET_PROG_INFO> message every 300ms,
+// until <uart_has_data> returns non-zero, indicating 
+// the UNIX side replied.
+//
+// NOTE: 
+//    - look at libpi.small/timer.c for how to correctly compare to 
+//      the current micro-second count.
+
+void wait_for_data(void) {
+    // implement this!
+}
+
+// Simple bootloader: put all of your code here: implement steps 1,2,3,4,5,6
 void notmain(void) {
     uart_init();
 
