@@ -13,18 +13,17 @@ interesting to the extent it enables you to build the protocol.
 
 ### 2. Look around the code.
 
-To save time in lab it's good to get sort-of familiar with the starter code and
-project code structure.  Since we are writing code to run on both UNIX
-(`unix-side`) and on the r/pi (`pi-side`) we have more directories than
-usual for today:
-
+To save time in lab it's good to get sort-of familiar with the starter
+code and project code structure.  Since we are writing code to run on both
+UNIX (`unix-side`) and on the r/pi (`pi-side`) we have more directories
+than usual for today.  These are described below.
 
 ##### `pi-side` directory
 
-The `pi-side` directory holds all the r/pi code.   In it, the 
-   - `pi-side/libpi.small` directory: holds a stripped down `libpi` implementation
-     called by your pi-bootloader code.  The next few labs will replace
-     the `.o` files with your own implementation.
+The `pi-side` directory holds all the r/pi code.   In it, the
+`pi-side/libpi.small` directory holds a stripped down `libpi`
+implementation called by your pi-bootloader code.  The next few labs
+will replace the `.o` files with your own implementation.
 
 Make sure you look through:
 
@@ -46,11 +45,12 @@ here to the `start.s` in your `1-gpio` lab:
 ##### `unix-side` directory
 
 The unix side code is split into two directories:
-   1. The `2-bootloader/unix-side` directory holds the UNIX side code 
+   1. The `2-bootloader/unix-side` directory holds the UNIX side
       bootloader code.  
-   2. `cs140e-21win-dev/libunix` directory holds useful helper routines that
-      your UNIX bootloader code will use (as well as subsequent labs).
-      These routines are all described in `libunix/libunix.h`.
+   2. `cs140e-21win-dev/libunix` directory holds useful UNIX helper
+      routines that your unix-side bootloader code will use (as
+      well as subsequent labs).  These routines are all described in
+      `libunix/libunix.h`.
 
 Make sure you look through:
   1. `simple-boot.c`: this holds the starter code you will extend
@@ -65,17 +65,17 @@ Make sure you look through:
 And, look but DO NOT MODIFY:
   1. `libunix/put-get.c`: this holds helper routines to send/receive data
      to/from the pi.   Use these directly!
-  2. `unix-side/my-install.c`: this is our starter code for setting everything up.
+  2. `unix-side/my-install.c`: the driver for the unix-side bootloader.
 
 ### 3. Implement two Unix support routines.
 
 To get you used to dealing with `man` pages and their ilk, you'll write
-two routines need by your bootloader.  Neither is very hard; hopefully
+two routines needed by your bootloader.  Neither is very hard; hopefully
 you can do these before lab:
 
   1. `read_file(size,name)`: read the file `name` into a buffer you
      allocate in its entirety and return it, writing the size of the
-     buffer in `size`.  Implementation goes in `unix-side/libunix/read-file.c`.
+     buffer in `size`.  Implementation goes in `libunix/read-file.c`.
 
      Note that you should pad the memory with zero-filled data up
      to the next multiple of 4.  (Easiest hack: just add 4 when you
@@ -84,12 +84,15 @@ you can do these before lab:
      You'll implement this using `stat()` to get the file size,
      and then use `read()` to read the entire file into memory.
      (Don't use `fread()` unless you set it up to read binary!)
-     Don't forget to close the file descriptor!
+
+     Don't forget to close the file descriptor!  Don't `free` memory
+     in general: we'll waste bytes to reduce errors and use `exit`
+     as our free.
 
   2. `find_tty` will look though your `/dev` directory to find the
      USB device that your OS has connected the TTY-USB to, open it,
      and return the resultant file descriptor.  Implementation goes in
-     `unix-side/libunix/find-ttyusb.c`
+     `libunix/find-ttyusb.c`
 
      You should use `scandir` to scan the `/dev` directory.  (`man
      scandir`).  The array `ttyusb_prefixes` has the set of prefixes
@@ -97,8 +100,8 @@ you can do these before lab:
      let us know!
 
      You should give an error if there zero or more than one matching
-     tty-serial devices.
-
+     tty-serial devices.  There is a `strcatf` helper function that makes
+     it easier to create a malloced name.
 
 ### 4. Nice haves to make coding faster, better.
 

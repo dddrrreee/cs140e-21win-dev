@@ -18,7 +18,8 @@ device code your bootloader needs (some fancier GPIO functions and a
 UART device driver).
 
 ### Sign off.
-  0. Make sure that the `HASH` method printed out by your Unix side matches
+  0. Make sure that the `HASH` output from your Unix side (which
+     prints a checksum of the sent code) matches
      that of  your partner when it sends the same program.
 
   1. Show you your bootloader works by running run `./my-install hello.bin` in 
@@ -46,7 +47,7 @@ The key files (as discussed in the PRELAB):
      your Unix laptop. You'll implement the code missing in
      `simple-boot.c:simple_boot`. 
 
-  3. The sub-directory `cs140e-21win-dev/libunix` has a set of Unix
+  3. The directory `cs140e-21win-dev/libunix` has a set of Unix
      utility routines.  By now you've implemented two of these:
      `find_ttyusb` and `read_file`.
 
