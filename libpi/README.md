@@ -11,17 +11,20 @@ The subdirectories hold `.c` and `.o` files we give you:
      and remove these pretty quickly.  If you want to swap between your implementation
      and ours, modify `put-your-src-here.mk` (described below).
 
-  - `cs140e-src`: these are pi-specific source files.  You can write your own, but 
-    these are not super interesting.
-
   - `libc`: `.c` implementation of standard library functions (often ripped off from
     `uClibc`).
 
   - `objs`: this is where all the .o's get put during make.  you can ignore it.
 
+  - all other source code is at the top level prefixed with a `cs140e-`
+    in the file
+    name.  Last year people got lost looking for stuff, so we just put
+    it all at the top.  You can write your own implementations of these
+    but mostly they are are not super interesting.
+
 You have two options:
 
- 1. `libpi/my-src/`: new code which has no implementation from us.
+ 1. `libpi/your-src/`: new code which has no implementation from us.
     The `Makefile` automatically grabs all files in this directory
     and compiles them.  This is nice b/c you don't have to do anything.
     It's bad if you put `.c` files in there that you don't want compiled.
@@ -32,5 +35,4 @@ You have two options:
     the top level `libpi/`, add your `.o` to `put-your-src-here.mk` and remove ours.
     The `Makefile` will then compile and grab them.
 
-Do not add files to `cs140e-src/`  or `libc/`  --- files we add later
-may conflict with yours.
+Do not add files to `libc/`  --- files we add later may conflict with yours.
