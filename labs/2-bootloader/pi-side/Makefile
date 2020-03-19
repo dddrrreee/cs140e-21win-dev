@@ -35,5 +35,4 @@ depend:
 .PHONY: clean depend copy libpi
 
 # DO NOT DELETE
-
-bootloader.o: ../shared-code/simple-boot.h libpi.small/rpi.h
+bootloader.o: simple-boot.h pi-crc32.h libpi.small/rpi.h

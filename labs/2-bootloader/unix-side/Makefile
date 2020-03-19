@@ -1,5 +1,5 @@
 CC = gcc
-SRC = my-install.c simple-boot.c  send-recv.c
+SRC = my-install.c simple-boot.c 
 OBJS = $(SRC:.c=.o)
 
 # check that your path is defined.
@@ -8,7 +8,7 @@ $(error CS140E_2021_PATH is not set: this should contain the absolute path to wh
 endif
 PATH_LIBUNIX = $(CS140E_2021_PATH)/libunix
 LIBUNIX = $(PATH_LIBUNIX)/libunix.a
-CFLAGS = -Wall -Werror -g  -Og -Ilibunix  -Wno-unused-function  -Wall -I$(PATH_LIBUNIX)
+CFLAGS = -Wall -Werror -g  -Og -Ilibunix  -I../pi-side -Wno-unused-function  -Wall -I$(PATH_LIBUNIX)
 
 # uncomment:
 #   - the 'run' target to automatically run the hello.bin code.
@@ -18,6 +18,8 @@ all : libunix my-install # run # tags
 
 libunix:
 	make -C $(PATH_LIBUNIX)
+
+$(OBJS): ../pi-side/simple-boot.h ../pi-side/pi-crc32.h 
 
 my-install:  $(OBJS)  $(LIBUNIX)
 	$(CC) $(CFLAGS) $(OBJS) -o my-install -lm $(LIBUNIX)

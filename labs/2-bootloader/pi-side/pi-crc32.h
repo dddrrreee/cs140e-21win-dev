@@ -1,41 +1,14 @@
-void simple_boot(int fd, const unsigned char * buf, unsigned n);
-
-enum {
-    ARMBASE=0x8000, // where program gets linked.  we could send this.
-
-    // the weird numbers are to try to help with debugging
-    // when you drop a byte, flip them, corrupt one, etc.
-    BOOT_START      = 0xFFFF0000,
-
-    GET_PROG_INFO   = 0x11112222,       // pi sends
-    PUT_PROG_INFO   = 0x33334444,       // unix sends
-
-    GET_CODE        = 0x55556666,       // pi sends
-    PUT_CODE        = 0x77778888,       // unix sends
-
-    BOOT_SUCCESS    = 0x9999AAAA,       // pi sends on success
-    BOOT_ERROR      = 0xBBBBCCCC,       // pi sends on failure.
-
-    PRINT_STRING    = 0xDDDDEEEE,       // pi sends to print a string.
-
-
-    // error codes from the pi to unix
-    BAD_CODE_ADDR   = 0xdeadbeef,
-    BAD_CODE_CKSUM  = 0xfeedface,
-};
-
-#ifdef __SIMPLE_IMPL__
+#ifndef __PI_CRC32_H__
+#define __PI_CRC32_H__
 
 /* ***********************************************************************
  * Simple public domain implementation of the standard CRC32 checksum.
  * http://home.thep.lu.se/~bjorn/crc/crc32_simple.c
  */
+#include <stdint.h>
 
 // DRE: assuming 32-bit unsigned b/c rpi.
-typedef unsigned u32;
-typedef unsigned char u8;
-
-static u32 crc32_tab[] = {
+static uint32_t crc32_tab[] = {
 	0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,
 	0xe963a535, 0x9e6495a3,	0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,
 	0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91, 0x1db71064, 0x6ab020f2,
@@ -81,8 +54,8 @@ static u32 crc32_tab[] = {
 	0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d
 };
 
-static u32 crc32_inc(const void *buf, unsigned size, u32 crc) {
-    const u8 *p = buf;
+static uint32_t crc32_inc(const void *buf, unsigned size, uint32_t crc) {
+    const uint8_t *p = buf;
 
     crc = crc ^ ~0U;
     while (size--)
@@ -90,7 +63,7 @@ static u32 crc32_inc(const void *buf, unsigned size, u32 crc) {
     return crc ^ ~0U;
 }
 
-static u32 crc32(const void *buf, unsigned size) {
+static uint32_t crc32(const void *buf, unsigned size) {
     return crc32_inc(buf,size,0);
 }
-#endif /* __SIMPLE_IMPL__ */
+#endif /* __CRC32 */
